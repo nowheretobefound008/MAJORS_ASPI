@@ -104,7 +104,7 @@ int main() {
 void loadUsers() {
     ifstream file("users.dat", ios::binary);
     if (!file) {
-        cout << "No existing user data found. Starting with empty database.\n";
+        cout << "\t\t\t\tNo existing user data found. Starting with empty database.\n";
         return;
     }
     
@@ -236,12 +236,22 @@ bool loginUser() {
     cout << "\t\t\t\tEnter password: STRLWR: ";
     cin.getline(password, MAX_LENGTH);
     
+   char tempUsername[MAX_LENGTH], tempPassword[MAX_LENGTH];
+    strcpy(tempUsername, username);
+    strcpy(tempPassword, password);
+    
+    convertToLowercase(tempUsername);
+    convertToLowercase(tempPassword);
+    
     for (int i = 0; i < userCount; i++) {
-        char tempUsername[MAX_LENGTH];
-        strcpy(tempUsername, users[i].username);
-        convertToLowercase(tempUsername);
-        
-        if (strcmp(tempUsername, username) == 0 && strcmp(users[i].password, password) == 0) {
+        char storedUsername[MAX_LENGTH], storedPassword[MAX_LENGTH];
+        strcpy(storedUsername, users[i].username);
+        strcpy(storedPassword, users[i].password);
+
+        convertToLowercase(storedUsername);
+        convertToLowercase(storedPassword);
+
+        if (strcmp(tempUsername, storedUsername) == 0 && strcmp(tempPassword, storedPassword) == 0) {
             return true;
         }
     }
